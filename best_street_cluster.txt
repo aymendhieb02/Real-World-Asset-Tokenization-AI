@@ -1,0 +1,117 @@
+from flask import Flask, request, jsonify
+import pandas as pd
+import numpy as np
+import pickle
+
+app = Flask(__name__)
+
+# ====================================
+# LOAD CLUSTERED DATA + MODEL
+# ====================================
+print("Loading clustered street data...")
+df = pd.read_csv("clustered_streets.csv")
+
+print("Loading clustering model...")
+with open("best_street_cluster_model.pkl", "rb") as f:
+    model_info = pickle.load(f)
+
+cluster_model = model_info["model"]
+num_clusters = model_info["num_clusters"]
+cluster_stats = model_info["cluster_stats"]
+
+centroids_df = pd.read_csv("cluster_centroids.csv")
+
+
+# ====================================
+# ENDPOINT 1: GET ALL CLUSTERS (PAGED)
+# ====================================
+@app.route("/clusters/all", methods=["GET"])
+def get_all_clusters():
+
+    page = int(request.args.get("page", 1))
+    page_size = int(request.args.get("size", 1000))
+
+    start = (page - 1) * page_size
+    end = start + page_size
+
+    data_slice = df.iloc[start:end].to_dict(orient="records")
+
+    return jsonify({
+        "page": page,
+        "page_size": page_size,
+        "total_properties": len(df),
+        "data": data_slice
+    })
+
+
+# ====================================
+# ENDPOINT 2: GET SUMMARY STATISTICS
+# ====================================
+@app.route("/clusters/summary", methods=["GET"])
+def get_summary():
+
+    return jsonify({
+        "num_clusters": int(num_clusters),
+        "silhouette_score": float(model_info["silhouette_score"]),
+        "training_time_seconds": float(model_info["train_time"]),
+        "cluster_distribution": cluster_stats.to_dict(orient="records")
+    })
+
+
+# ====================================
+# ENDPOINT 3: GET PROPERTIES IN ONE CLUSTER
+# ====================================
+@app.route("/clusters/by_cluster/<int:cluster_id>", methods=["GET"])
+def get_cluster(cluster_id):
+
+    subset = df[df["street_cluster"] == cluster_id]
+
+    return jsonify({
+        "cluster_id": cluster_id,
+        "count": len(subset),
+        "data": subset.to_dict(orient="records")
+    })
+
+
+# ====================================
+# ENDPOINT 4: RETURN CLUSTER CENTROIDS (MAP HEATMAP)
+# ====================================
+@app.route("/clusters/centroids", methods=["GET"])
+def get_centroids():
+
+    return jsonify({
+        "num_clusters": len(centroids_df),
+        "centroids": centroids_df.to_dict(orient="records")
+    })
+
+
+# ====================================
+# ENDPOINT 5: PREDICT CLUSTER FOR NEW LOCATION
+# ====================================
+@app.route("/clusters/predict", methods=["POST"])
+def predict_cluster():
+
+    data = request.get_json()
+
+    if "lat" not in data or "lng" not in data:
+        return jsonify({"error": "Missing fields: lat, lng"}), 400
+
+    lat = float(data["lat"])
+    lng = float(data["lng"])
+
+    coords = np.array([[lat, lng]])
+
+    cluster_id = int(cluster_model.predict(coords)[0])
+
+    return jsonify({
+        "lat": lat,
+        "lng": lng,
+        "predicted_cluster": cluster_id
+    })
+
+
+# ====================================
+# RUN SERVER
+# ====================================
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
