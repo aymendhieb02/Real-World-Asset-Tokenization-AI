@@ -1,0 +1,132 @@
+{
+  "primary": {
+    "midnightNavy": {
+      "hex": "#020617",
+      "rgb": "rgb(2, 6, 23)",
+      "usage": "Primary background color, body background, main containers"
+    },
+    "midnightDark": {
+      "hex": "#0f172a",
+      "rgb": "rgb(15, 23, 42)",
+      "usage": "Secondary dark background, cards, scrollbar track"
+    }
+  },
+  "accent": {
+    "neonCyan": {
+      "hex": "#00f6ff",
+      "rgb": "rgb(0, 246, 255)",
+      "rgba": {
+        "50": "rgba(0, 246, 255, 0.5)",
+        "30": "rgba(0, 246, 255, 0.3)",
+        "80": "rgba(0, 246, 255, 0.8)"
+      },
+      "usage": "Primary accent, highlights, buttons, borders, glows, hover states"
+    },
+    "neonPurple": {
+      "hex": "#8b5cf6",
+      "rgb": "rgb(139, 92, 246)",
+      "rgba": {
+        "50": "rgba(139, 92, 246, 0.5)"
+      },
+      "usage": "Secondary accent, gradients, borders, glows"
+    },
+    "electricBlue": {
+      "hex": "#2563eb",
+      "rgb": "rgb(37, 99, 235)",
+      "usage": "Tertiary accent, buttons, scrollbar, gradients"
+    },
+    "cyberGreen": {
+      "hex": "#22d3ee",
+      "rgb": "rgb(34, 211, 238)",
+      "usage": "Quaternary accent, highlights"
+    }
+  },
+  "semantic": {
+    "background": {
+      "hsl": "hsl(222 47% 1%)",
+      "usage": "Base background"
+    },
+    "foreground": {
+      "hsl": "hsl(213 31% 91%)",
+      "usage": "Base text color"
+    },
+    "card": {
+      "background": "hsl(222 47% 3%)",
+      "foreground": "hsl(213 31% 91%)"
+    },
+    "primary": {
+      "color": "hsl(217 91% 60%)",
+      "foreground": "hsl(222 47% 1%)"
+    },
+    "secondary": {
+      "color": "hsl(217 33% 17%)",
+      "foreground": "hsl(213 31% 91%)"
+    },
+    "muted": {
+      "color": "hsl(217 33% 17%)",
+      "foreground": "hsl(215 20% 65%)"
+    },
+    "accent": {
+      "color": "hsl(217 33% 17%)",
+      "foreground": "hsl(213 31% 91%)"
+    },
+    "destructive": {
+      "color": "hsl(0 63% 31%)",
+      "foreground": "hsl(213 31% 91%)"
+    },
+    "border": {
+      "color": "hsl(217 33% 17%)"
+    },
+    "input": {
+      "color": "hsl(217 33% 17%)"
+    },
+    "ring": {
+      "color": "hsl(217 91% 60%)"
+    }
+  },
+  "effects": {
+    "glassmorphism": {
+      "background": "rgba(255, 255, 255, 0.05)",
+      "border": "rgba(255, 255, 255, 0.1)"
+    },
+    "neonGlow": {
+      "cyan": {
+        "shadow1": "0 0 20px rgba(0, 246, 255, 0.5)",
+        "shadow2": "0 0 40px rgba(0, 246, 255, 0.3)"
+      },
+      "purple": {
+        "shadow1": "0 0 20px rgba(139, 92, 246, 0.5)",
+        "shadow2": "0 0 40px rgba(139, 92, 246, 0.3)"
+      },
+      "blue": {
+        "shadow": "0 0 20px rgba(37, 99, 235, 0.5)"
+      }
+    }
+  },
+  "gradients": {
+    "electric": "linear-gradient(90deg, #00f6ff, #8b5cf6, #2563eb, #00f6ff)",
+    "cyanToPurple": "from-neon-cyan to-neon-purple",
+    "cyanToPurpleToBlue": "from-neon-cyan via-neon-purple to-electric-blue"
+  },
+  "tailwindClasses": {
+    "backgrounds": [
+      "bg-midnight-navy",
+      "bg-midnight-dark"
+    ],
+    "text": [
+      "text-neon-cyan",
+      "text-neon-purple",
+      "text-electric-blue",
+      "text-cyber-green"
+    ],
+    "borders": [
+      "border-neon-cyan",
+      "border-neon-purple"
+    ],
+    "gradients": [
+      "from-neon-cyan to-neon-purple",
+      "from-neon-cyan via-neon-purple to-electric-blue"
+    ]
+  }
+}
+

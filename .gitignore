@@ -1,7 +1,14 @@
 # Markdown files (except README.md)
 *.md
 !README.md
+!readme.md
 !frontend/README.md
+
+# Explicitly exclude these markdown files
+aiApi-integration.md
+chatgpt-conversation.md
+deepseek-conversation.md
+frontend/COLOR_PALETTE.md
 
 # Dependencies
 node_modules/

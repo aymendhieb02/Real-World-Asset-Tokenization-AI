@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: hsl(222 47% 1%);
+  --color-foreground: hsl(213 31% 91%);
+  --color-card: hsl(222 47% 3%);
+  --color-card-foreground: hsl(213 31% 91%);
+  --color-popover: hsl(222 47% 3%);
+  --color-popover-foreground: hsl(213 31% 91%);
+  --color-primary: hsl(217 91% 60%);
+  --color-primary-foreground: hsl(222 47% 1%);
+  --color-secondary: hsl(217 33% 17%);
+  --color-secondary-foreground: hsl(213 31% 91%);
+  --color-muted: hsl(217 33% 17%);
+  --color-muted-foreground: hsl(215 20% 65%);
+  --color-accent: hsl(217 33% 17%);
+  --color-accent-foreground: hsl(213 31% 91%);
+  --color-destructive: hsl(0 63% 31%);
+  --color-destructive-foreground: hsl(213 31% 91%);
+  --color-border: hsl(217 33% 17%);
+  --color-input: hsl(217 33% 17%);
+  --color-ring: hsl(217 91% 60%);
+  --radius: 0.5rem;
+  
+  --color-midnight-navy: #020617;
+  --color-midnight-dark: #0f172a;
+  --color-neon-cyan: #00f6ff;
+  --color-neon-purple: #8b5cf6;
+  --color-electric-blue: #2563eb;
+  --color-cyber-green: #22d3ee;
+}
+
+body {
+  background-color: #020617;
+  color: hsl(213 31% 91%);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .neon-glow {
+    box-shadow: 0 0 20px rgba(0, 246, 255, 0.5), 0 0 40px rgba(0, 246, 255, 0.3);
+  }
+  
+  .neon-glow-purple {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5), 0 0 40px rgba(139, 92, 246, 0.3);
+  }
+  
+  .electric-border {
+    position: relative;
+    background: linear-gradient(90deg, #00f6ff, #8b5cf6, #2563eb, #00f6ff);
+    background-size: 200% 100%;
+    animation: electric-border 3s linear infinite;
+  }
+  
+  .electric-border::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: #020617;
+    border-radius: inherit;
+  }
+  
+  .noise-texture {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 4px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00f6ff;
+    }
+
+    /* World Map Animations */
+    @keyframes drawLine {
+      from {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+      }
+      to {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 0;
+      }
+    }
+
