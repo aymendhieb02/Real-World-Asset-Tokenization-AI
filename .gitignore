@@ -75,6 +75,18 @@ tmp/
 rwa-backend/dist/
 rwa-backend/node_modules/
 
+# Documentation files (keep only README.md)
+CANVA_PRESENTATION_GUIDE.md
+DEPLOYMENT.md
+MODELS_README.md
+PROJECT_SUMMARY.md
+PUSH_INSTRUCTIONS.md
+SETUP_GIT_LFS.md
+
+# Text files (not needed in repo)
+*.txt
+!requirements.txt
+
 # Large data files - use Git LFS for these
 # Uncomment if using Git LFS:
 # *.csv
