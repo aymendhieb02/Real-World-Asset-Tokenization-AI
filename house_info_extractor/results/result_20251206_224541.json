@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": {
+    "price": 780.0,
+    "status": "Sold",
+    "brokered_by": "Sunrise Homes Agency",
+    "bed": 0,
+    "bath": 5,
+    "acre_lot": 4.0,
+    "house_size": 3.12,
+    "street": "88 Lakeview Avenue",
+    "city": "Seattle",
+    "state": "Washington",
+    "zip_code": "98144",
+    "prev_sold_date": "2021-07-19",
+    "confidence": 100.0,
+    "extraction_date": "2025-12-06T22:45:41.356270",
+    "text_preview": "PROPERTY LISTING CONTRACT\nBrokered By: Sunrise Homes Agency\nStatus: Sold\nPrice: $780,000\nBed: 5\nBath: 4\nAcre Lot: 0.55\nStreet: 88 Lakeview Avenue\nCity: Seattle\nState: Washington\nZip Code: 98144\nHouse Size: 3,120 sqft\nPrev Sold Date: 2021-07-19\n"
+  },
+  "metadata": {
+    "text_length": 244,
+    "file_name": "real_estate_listing_variant_2.pdf",
+    "confidence": 100.0,
+    "original_filename": "real_estate_listing_variant_2.pdf",
+    "saved_path": "uploads\\real_estate_listing_variant_2.pdf"
+  },
+  "id": "20251206_224541",
+  "timestamp": "2025-12-06T22:45:41.356290"
+}

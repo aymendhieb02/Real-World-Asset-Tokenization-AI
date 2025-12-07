@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "data": {
+    "price": 1595.0,
+    "brokered_by": "Belle Maison Realty – East Bay",
+    "bed": 4,
+    "bath": 3,
+    "house_size": 2.65,
+    "street": "parking spaces",
+    "zip_code": "94610",
+    "confidence": 58.3,
+    "extraction_date": "2025-12-07T02:06:56.906897",
+    "text_preview": "Property Description\nCharming Piedmont Avenue Craftsman\nBelle Maison Realty California\nDecember 6, 2025\nProperty Snapshot\nMLS# EB-2025-1741\nList Price $1,595,000\nAvailability Immediate\nProperty Type Single Family Home\nCondition Excellent – Fully Renovated 2023\n1 General Description\nStunning 1920s Craftsman meticulously renovated to the highest modern standards while preserv-\ning its original charm. Located on one of Piedmont Avenue’s most sought-after streets, just blocks\nfrom vibrant shops, res..."
+  },
+  "metadata": {
+    "text_length": 3500,
+    "file_name": "doc_pro_test_4.pdf",
+    "confidence": 58.3,
+    "original_filename": "doc_pro_test_4.pdf",
+    "saved_path": "uploads\\doc_pro_test_4.pdf"
+  },
+  "id": "20251207_020656",
+  "timestamp": "2025-12-07T02:06:56.906995"
+}

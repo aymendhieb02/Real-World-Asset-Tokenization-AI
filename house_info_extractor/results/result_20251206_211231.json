@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": {
+    "price": 4500004.0,
+    "status": "Available",
+    "brokered_by": "Belle Maison Immobilier",
+    "bed": 3,
+    "bath": 3,
+    "acre_lot": 0.086,
+    "house_size": 125.0,
+    "street": "42 Avenue des Tilleuls",
+    "city": "Paris",
+    "state": "France",
+    "zip_code": "75016",
+    "prev_sold_date": "2025-12-06",
+    "confidence": 100.0,
+    "extraction_date": "2025-12-06T21:12:31.400222",
+    "text_preview": "n\nProperty Listing – Contract Summary\n1. Property Overview\nStreet: 42 Avenue des Tilleuls\nCity: Paris\nState: France\nZIP Code: 75016\nStatus: Available\nBrokered By: Belle Maison Immobilier\n2. Technical Details\nHouse Size: 125 m²\nBedrooms: 3\nBathrooms: 2\nLot Size: 0.086 acre\nPrevious Sold Date: December 6, 2025\n3. Financial Information\nListing Price: €450,000\n4. Confirmation & Signatures\nThis document summarizes the verified property details extracted from the listing. Both parties\nacknowledge accu..."
+  },
+  "metadata": {
+    "text_length": 686,
+    "file_name": "real_estate_listing_style_contract_1.pdf",
+    "confidence": 100.0,
+    "original_filename": "real_estate_listing_style_contract (1).pdf",
+    "saved_path": "uploads\\real_estate_listing_style_contract_1.pdf"
+  },
+  "id": "20251206_211231",
+  "timestamp": "2025-12-06T21:12:31.400327"
+}

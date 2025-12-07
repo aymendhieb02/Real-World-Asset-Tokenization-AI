@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "data": {
+    "price": 3.2,
+    "status": "For Rent",
+    "brokered_by": "Premier Estate Group",
+    "bath": 2,
+    "acre_lot": 2.0,
+    "house_size": 1.45,
+    "street": "455 Maplewood Drive",
+    "city": "Denver",
+    "state": "Group",
+    "zip_code": "80209",
+    "prev_sold_date": "2020-05-30",
+    "confidence": 91.7,
+    "extraction_date": "2025-12-06T22:45:48.875258",
+    "text_preview": "PROPERTY LISTING CONTRACT\nBrokered By: Premier Estate Group\nStatus: For Rent\nPrice: $3,200 / month\nBed: 2\nBath: 2\nAcre Lot: 0.15\nStreet: 455 Maplewood Drive\nCity: Denver\nState: Colorado\nZip Code: 80209\nHouse Size: 1,450 sqft\nPrev Sold Date: 2020-05-30\n"
+  },
+  "metadata": {
+    "text_length": 252,
+    "file_name": "real_estate_listing_variant_4.pdf",
+    "confidence": 91.7,
+    "original_filename": "real_estate_listing_variant_4.pdf",
+    "saved_path": "uploads\\real_estate_listing_variant_4.pdf"
+  },
+  "id": "20251206_224548",
+  "timestamp": "2025-12-06T22:45:48.875283"
+}

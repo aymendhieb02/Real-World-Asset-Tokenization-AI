@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "data": {
+    "rooms": 5,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "toilets": 2,
+    "kitchens": 1,
+    "area": 125.0,
+    "price": 450.0,
+    "postal_code": "75016",
+    "city": "Paris",
+    "address": "complète",
+    "confidence": 100.0,
+    "extraction_date": "2025-12-06T16:20:43.040889",
+    "text_preview": "Description de la Propriété\nMaison de Charme à Vendre\nAgence Immobilière Belle Maison\n6 décembre 2025\nFiche Technique\nRéférence MA-2024-4572\nPrix € 450,000\nDisponibilité Immédiate\nType de bien Maison individuelle\nÉtat Excellent, rénové en 2022\n1 Description Générale\nBelle maison de caractère située dans un quartier calme et résidentiel, offrant un cadre de vie\nagréable à proximité de tous les commerces et transports.\n2 Caractéristiques Principales\nCaractéristique Description Valeur\nSurface habit..."
+  },
+  "metadata": {
+    "text_length": 3254,
+    "file_name": "doc_pro_test_1.pdf",
+    "confidence": 100.0,
+    "original_filename": "doc_pro_test_1.pdf",
+    "saved_path": "uploads\\doc_pro_test_1.pdf"
+  },
+  "id": "20251206_162043",
+  "timestamp": "2025-12-06T16:20:43.041019"
+}

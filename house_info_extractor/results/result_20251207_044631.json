@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": {
+    "price": 520000.0,
+    "status": "For Sale",
+    "brokered_by": "Emily Parker Realty",
+    "bed": 4,
+    "bath": 4,
+    "acre_lot": 0.32,
+    "house_size": 2480.0,
+    "street": "1298 Willow Creek Rd",
+    "city": "Austin",
+    "state": "Texas",
+    "zip_code": "78745",
+    "prev_sold_date": "2019-03-12",
+    "confidence": 100.0,
+    "extraction_date": "2025-12-07T04:46:31.137869",
+    "text_preview": "PROPERTY LISTING CONTRACT\nBrokered By: Emily Parker Realty\nStatus: For Sale\nPrice: $520,000\nBed: 4\nBath: 3\nAcre Lot: 0.32\nStreet: 1298 Willow Creek Rd\nCity: Austin\nState: Texas\nZip Code: 78745\nHouse Size: 2,480 sqft\nPrev Sold Date: 2019-03-12\n"
+  },
+  "metadata": {
+    "text_length": 243,
+    "file_name": "real_estate_listing_variant_1.pdf",
+    "confidence": 100.0,
+    "original_filename": "real_estate_listing_variant_1.pdf",
+    "saved_path": "uploads\\real_estate_listing_variant_1.pdf"
+  },
+  "id": "20251207_044631",
+  "timestamp": "2025-12-07T04:46:31.137927"
+}

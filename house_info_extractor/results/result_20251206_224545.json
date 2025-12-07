@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": {
+    "price": 650.0,
+    "status": "Pending",
+    "brokered_by": "Blue Horizon Properties",
+    "bed": 0,
+    "bath": 3,
+    "acre_lot": 2.0,
+    "house_size": 1.98,
+    "street": "742 Ocean Breeze St",
+    "city": "Miami",
+    "state": "Florida",
+    "zip_code": "33157",
+    "prev_sold_date": "2018-11-02",
+    "confidence": 100.0,
+    "extraction_date": "2025-12-06T22:45:45.175530",
+    "text_preview": "PROPERTY LISTING CONTRACT\nBrokered By: Blue Horizon Properties\nStatus: Pending\nPrice: $650,000\nBed: 3\nBath: 2\nAcre Lot: 0.4\nStreet: 742 Ocean Breeze St\nCity: Miami\nState: Florida\nZip Code: 33157\nHouse Size: 1,980 sqft\nPrev Sold Date: 2018-11-02\n"
+  },
+  "metadata": {
+    "text_length": 245,
+    "file_name": "real_estate_listing_variant_3.pdf",
+    "confidence": 100.0,
+    "original_filename": "real_estate_listing_variant_3.pdf",
+    "saved_path": "uploads\\real_estate_listing_variant_3.pdf"
+  },
+  "id": "20251206_224545",
+  "timestamp": "2025-12-06T22:45:45.175562"
+}

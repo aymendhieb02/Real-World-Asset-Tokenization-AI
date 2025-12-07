@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": {
+    "price": 589000.0,
+    "status": "Available",
+    "brokered_by": "Lone Star Realty Group",
+    "bed": 4,
+    "bath": 4,
+    "acre_lot": 0.27,
+    "house_size": 2145.0,
+    "street": "1842 Maple Ridge Drive",
+    "city": "Austin",
+    "state": "Texas",
+    "zip_code": "78723",
+    "prev_sold_date": "2019-08-18",
+    "confidence": 100.0,
+    "extraction_date": "2025-12-07T06:44:57.113659",
+    "text_preview": "Property Listing – Contract Summary (United States Edition)\n1. Property Overview\nStreet: 1842 Maple Ridge Drive\nCity: Austin\nState: Texas\nZIP Code: 78723\nStatus: Available\nBrokered By: Lone Star Realty Group\n2. Technical Details\nHouse Size: 2,145 sq ft\nBedrooms: 4\nBathrooms: 3\nLot Size: 0.27 acre\nYear Built: 2014\nPrevious Sold Date: August 18, 2019\n3. Financial Information\nListing Price: $589,000 USD\nEstimated Monthly Property Tax: ~$720\nEstimated Annual Insurance: ~$1,850\n4. Confirmation & Sign..."
+  },
+  "metadata": {
+    "text_length": 842,
+    "file_name": "US_Property_Contract.pdf",
+    "confidence": 100.0,
+    "original_filename": "US_Property_Contract.pdf",
+    "saved_path": "uploads\\US_Property_Contract.pdf"
+  },
+  "id": "20251207_064457",
+  "timestamp": "2025-12-07T06:44:57.113766"
+}
