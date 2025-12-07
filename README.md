@@ -21,15 +21,15 @@ This project presents a comprehensive machine learning solution for real estate 
 
 **Problem Statement:** Real estate investment decisions require accurate price predictions, future value forecasting, and risk assessment. Traditional methods often fail to capture complex relationships between property features, location, and market trends, leading to suboptimal investment decisions.
 
-**Solution:** We developed an end-to-end pipeline that combines advanced data preprocessing techniques with XGBoost regression models to predict property prices. The system includes sophisticated imputation strategies for handling missing data, outlier detection and treatment, feature engineering, and time-based forecasting capabilities. Additionally, we implemented a geographic clustering system using MiniBatchKMeans to identify spatial patterns and an investment recommendation engine that evaluates properties based on predicted ROI and risk metrics.
+**Solution:** We developed an end-to-end pipeline that combines advanced data preprocessing techniques with XGBoost regression models to predict property prices. The system includes sophisticated imputation strategies for handling missing data, outlier detection and treatment, feature engineering, and time-based forecasting capabilities. Additionally, we implemented a DBSCAN street-level geographic clustering system to identify spatial patterns within streets and an investment recommendation engine that evaluates properties based on predicted ROI and risk metrics.
 
 **Key Results:**
 - Achieved **R² score of 0.8392** on test data, explaining 83.92% of price variance
 - Mean Absolute Error (MAE) of **$101,759** and Mean Absolute Percentage Error (MAPE) of **25.46%**
-- Successfully processed and cleaned **2.2+ million property records**
+- Successfully processed and cleaned **1.5+ million property records** (1,545,976 after cleaning)
 - Implemented time-based forecasting for 1, 5, and 10-year price predictions
 - Created an investment recommendation system with risk-adjusted ROI calculations
-- Achieved **0.4768 silhouette score** for geographic clustering with 30 clusters
+- Achieved **0.751 silhouette score** for DBSCAN street-level clustering (excellent quality - strong, well-separated clusters)
 
 ---
 
@@ -199,8 +199,8 @@ This project presents a comprehensive machine learning solution for real estate 
         - Each property includes: location, features, current price, forecasted prices, ROI metrics, risk, and risk-adjusted ROI
    - **Use Case:** Investment decision support for real estate investors with specific budget and criteria
 
-4. **DBSCAN Street-Level Clustering with Insights**
-   - **Purpose:** Geographic clustering of properties within streets with comprehensive analytics
+4. **DBSCAN Street-Level Clustering**
+   - **Purpose:** Geographic clustering of properties within streets to identify groups of nearby houses on the same street
    - **Algorithm:** Density-Based Spatial Clustering of Applications with Noise (DBSCAN)
    - **Why DBSCAN:**
      - Identifies clusters of nearby houses on the same street
@@ -208,37 +208,32 @@ This project presents a comprehensive machine learning solution for real estate 
      - Automatically identifies noise points (isolated properties)
      - No need to pre-specify number of clusters
    - **Configuration:**
-     - **Radius (eps):** 50 meters - houses within this distance are grouped
+     - **Radius (eps):** 50 meters (0.05 km) - houses within this distance are grouped
      - **Min Samples:** 2 houses minimum to form a cluster
      - **Strategy:** Clusters houses within each street separately, then assigns global cluster IDs
-   - **Enhanced Features:**
-     - **Cluster Insights:** Calculates detailed metrics for each cluster:
-       - Value categories (High Value Pocket, Mid Value Area, Affordable Zone, Budget Friendly)
-       - Risk scores and risk levels (Low/Medium/High risk based on price volatility)
-       - Year-over-year growth trends
-       - Price statistics (average, min, max, standard deviation)
-       - Location information (city, state, region)
-     - **Silhouette Score:** Calculates and interprets cluster quality (-1 to +1 scale)
-     - **Investment Opportunities:** Identifies top opportunities (high growth + low risk clusters)
-     - **Category Breakdown:** Groups clusters by value category for market segmentation
-     - **Risk Analysis:** Risk distribution analysis across all clusters
+     - **Coordinate System:** Uses ZIP centroids with jitter (lat_jitter, lng_jitter)
+     - **EPS Conversion:** Converts 50m radius to degrees (EPS_DEGREES = EPS_KM / 111.0)
+   - **Process Flow:**
+     1. Load dataset with geographic coordinates
+     2. Group properties by street name
+     3. For each street:
+        - Extract all houses on that street
+        - Apply DBSCAN clustering (50m radius, min 2 samples)
+        - Assign unique global cluster IDs
+        - Mark noise points (isolated properties) as -1
+     4. Quality checks:
+        - Verify cluster-street consistency (all clusters within single streets)
+        - Analyze cluster geographic spread (average diameter in km)
+     5. Generate statistics and output files
    - **Output Files:**
      - `clustered_by_street.csv` - Full dataset with cluster IDs
-     - `cluster_insights.csv` - Detailed metrics for each cluster
-     - `cluster_centroids.csv` - Cluster centers with insights (for mapping)
-     - `street_statistics.csv` - Per-street summary statistics
-     - `cluster_report.txt` - Human-readable analysis report
-     - `clustering_summary.pkl` - Metadata and configuration
-   - **Output Columns:** Creates `street_cluster` and `within_street_cluster` columns for geographic analysis
+     - `street_clustering_stats.csv` - Per-street summary statistics (total houses, clusters found, noise points, avg per cluster)
+     - `street_cluster_centroids.csv` - Cluster centers with metadata (cluster_id, street, lat, lng, count)
+     - `street_clustering_metadata.pkl` - Configuration and metadata (eps, min_samples, total clusters, processing time)
+   - **Output Columns:**
+     - `street_cluster`: Global cluster ID (unique across all streets, -1 for noise)
+     - `within_street_cluster`: Local cluster ID within each street (-1 for noise, 0 for streets with <2 houses)
 
-5. **MiniBatchKMeans Clustering (Alternative Approach)**
-   - **Purpose:** Fast geographic clustering of all properties (alternative to DBSCAN)
-   - **Algorithm:** Mini-batch K-Means clustering
-   - **Why MiniBatchKMeans:**
-     - 10-100x faster than standard K-Means for large datasets
-     - Handles 2.2M+ data points efficiently
-     - Memory-efficient batch processing
-   - **Configuration:** 30 clusters for balanced granularity and performance
 
 #### Key Design Decisions
 
@@ -305,12 +300,12 @@ This project presents a comprehensive machine learning solution for real estate 
   - Predictions transformed back using `expm1()`
 
 **Clustering Configuration:**
-- **Algorithm:** MiniBatchKMeans
-- **Number of Clusters:** 30
-- **Batch Size:** 1,000
-- **Max Iterations:** 100
-- **Initializations:** 3
-- **Evaluation:** Silhouette score on 10,000 sample points
+- **Algorithm:** DBSCAN (Density-Based Spatial Clustering)
+- **Strategy:** Street-level clustering (clusters houses within each street separately)
+- **Radius (eps):** 50 meters
+- **Min Samples:** 2 houses per cluster
+- **Processing:** Iterates through 1,448,099 unique streets
+- **Evaluation:** Silhouette score: 0.751 (excellent quality)
 
 #### Tools, Libraries, and Frameworks
 
@@ -395,7 +390,6 @@ The project follows a modular pipeline architecture:
 │  • Cluster insights (value, risk, growth)                  │
 │  • Investment opportunity identification                   │
 │  • Silhouette score: 0.751 (Excellent quality)            │
-│  • Alternative: MiniBatchKMeans (30 clusters)              │
 │  • Cluster analysis and visualization                      │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -455,11 +449,10 @@ The project follows a modular pipeline architecture:
        - Risk distribution analysis
        - Investment opportunity identification
      - **Output multiple files:**
-       - Cluster insights CSV
-       - Cluster centroids with metadata
-       - Street statistics
-       - Human-readable reports
-   - **Alternative: MiniBatchKMeans** for overall geographic clustering (30 clusters)
+       - `clustered_by_street.csv` - Full dataset with cluster IDs
+       - `street_clustering_stats.csv` - Per-street summary statistics
+       - `street_cluster_centroids.csv` - Cluster centers with metadata
+       - `street_clustering_metadata.pkl` - Configuration and metadata
    - Cluster statistics and analysis
    - Spatial pattern identification
 
@@ -509,7 +502,6 @@ The project follows a modular pipeline architecture:
      - Generates investment opportunity reports
      - Creates multiple output files (insights, centroids, statistics, reports)
      - **Silhouette Score: 0.751** (Excellent - Strong, well-separated clusters)
-   - **MiniBatchKMeans clustering:** Alternative approach for overall geographic clustering (30 clusters)
    - **Cluster Analytics:**
      - Silhouette score calculation and interpretation
      - Category breakdown by value segments
@@ -887,9 +879,9 @@ This experiment aimed to identify spatial patterns and group properties into geo
 **Initial Attempts:**
 - **KMeans vs HDBSCAN:** Tested both algorithms on full dataset, but both were too slow (>1.5 hours) or failed to produce meaningful results
 - **KMeans:** Required pre-specifying number of clusters, struggled with irregular geographic patterns
-- **HDBSCAN:** Too computationally expensive for 2.2M+ points, took over 1.5 hours
+- **HDBSCAN:** Too computationally expensive for large datasets, took over 1.5 hours
 
-**Final Implementation - DBSCAN Street-Level Clustering with Insights:**
+**Final Implementation - DBSCAN Street-Level Clustering:**
 - **Algorithm:** DBSCAN (Density-Based Spatial Clustering)
 - **Strategy:** Cluster houses within each street separately, then assign global cluster IDs with comprehensive analytics
 - **Parameters:**
@@ -897,41 +889,30 @@ This experiment aimed to identify spatial patterns and group properties into geo
   - **Min Samples:** 2 houses minimum to form a cluster
   - **Metric:** Euclidean distance in coordinate space
 - **Process:**
-  1. Group properties by street name
-  2. For each street, apply DBSCAN clustering based on geographic proximity
-  3. Assign unique global cluster IDs across all streets
-  4. Identify noise points (isolated properties that don't form clusters)
-  5. **Calculate cluster insights for each cluster:**
-     - Value categorization (based on price percentiles)
-     - Risk score calculation (price volatility as coefficient of variation)
-     - Risk level classification (Low/Medium/High)
-     - Year-over-year growth trends (if temporal data available)
-     - Price statistics (mean, min, max, std)
-     - Location metadata (city, state, region)
-  6. **Generate comprehensive reports:**
-     - Top clusters by value and growth
-     - Category breakdowns
-     - Risk distribution analysis
-     - Investment opportunity identification
-- **Performance:** Completed efficiently (processing time varies with dataset size)
+  1. Load dataset with geographic coordinates (ZIP centroids + jitter)
+  2. Group properties by street name (1,448,099 unique streets)
+  3. For each street:
+     - Extract all houses on that street
+     - Apply DBSCAN clustering based on geographic proximity (50m radius)
+     - Assign unique global cluster IDs across all streets
+     - Identify noise points (isolated properties that don't form clusters)
+  4. **Quality Checks:**
+     - Verify cluster-street consistency (all clusters within single streets)
+     - Analyze cluster geographic spread (average diameter)
+  5. **Generate Output Files:**
+     - `clustered_by_street.csv` - Full dataset with cluster IDs
+     - `street_clustering_stats.csv` - Per-street summary statistics
+     - `street_cluster_centroids.csv` - Cluster centers with metadata
+     - `street_clustering_metadata.pkl` - Configuration and metadata
+- **Performance:** 
+  - Processing time: 1,270.48 seconds (~21 minutes) for 1,448,099 streets
+  - Efficient iteration: ~1,170 streets/second
 - **Quality Metrics:**
-  - **Silhouette Score:** Calculated on clustered points (sample-based for large datasets)
-  - **Interpretation:** Provides quality assessment (Excellent/Good/Fair/Poor)
-- **Output:** Multiple outputs:
-  - **Cluster Columns:**
-    - `street_cluster`: Global cluster ID (unique across all streets)
-    - `within_street_cluster`: Local cluster ID within each street
-  - **Analysis Files:**
-    - Cluster insights with metrics
-    - Investment opportunities report
-    - Street-level statistics
-    - Human-readable cluster report
-
-**Alternative Approach - MiniBatchKMeans:**
-- **Purpose:** Fast alternative for overall geographic clustering (not street-specific)
-- **Configuration:** 30 clusters, batch processing for efficiency
-- **Performance:** 0.30 seconds training time
-- **Evaluation:** Silhouette score of 0.4768 on 10,000 sample points
+  - **Silhouette Score:** 0.751 (Excellent - Strong, well-separated clusters)
+  - **Cluster Quality:** High score indicates well-separated, cohesive clusters
+- **Output Columns:**
+  - `street_cluster`: Global cluster ID (unique across all streets, -1 for noise)
+  - `within_street_cluster`: Local cluster ID within each street (-1 for noise)
 
 ### 3.2 Metrics and Results
 
@@ -991,12 +972,13 @@ This experiment aimed to identify spatial patterns and group properties into geo
 
 **Key Features:**
 - **Street-Specific Clustering:** Each street is clustered independently, then assigned global IDs
-- **Geographic Granularity:** 1 km radius captures nearby houses on same street
+- **Geographic Granularity:** 50-meter radius captures nearby houses on same street
 - **Automatic Cluster Detection:** No need to pre-specify number of clusters
-- **Noise Handling:** Identifies isolated properties that don't belong to any cluster
+- **Noise Handling:** Identifies isolated properties that don't belong to any cluster (99.7% of dataset)
 - **Two-Level Clustering:**
-  - `street_cluster`: Global cluster ID across all streets
-  - `within_street_cluster`: Local cluster ID within each street
+  - `street_cluster`: Global cluster ID across all streets (-1 for noise)
+  - `within_street_cluster`: Local cluster ID within each street (-1 for noise)
+- **Efficient Processing:** Handles 1.4M+ unique streets in ~21 minutes
 
 **Enhanced Analytics:**
 - **Value Categorization:** 
@@ -1046,22 +1028,6 @@ This experiment aimed to identify spatial patterns and group properties into geo
 - Small cluster sizes (2-16) represent tight geographic groupings
 - Most properties are isolated, which is typical for real estate data
 
-**Alternative: MiniBatchKMeans Results (Overall Geographic Clustering):**
-
-| Metric | Value |
-|--------|-------|
-| **Number of Clusters** | 30 |
-| **Silhouette Score** | 0.4768 |
-| **Training Time** | 0.30 seconds |
-| **Total Properties Clustered** | 2,223,412 |
-| **Average Properties per Cluster** | 74,114 |
-| **Largest Cluster** | 179,081 properties |
-| **Smallest Cluster** | 489 properties |
-
-**Cluster Distribution:**
-- Well-balanced clusters with reasonable size distribution
-- Geographic spread: clusters cover 5-17° latitude/longitude ranges
-- Suitable for location-based feature engineering at regional level
 
 #### Forecasting Model Performance
 
@@ -1175,12 +1141,13 @@ This experiment aimed to identify spatial patterns and group properties into geo
 #### Computational Challenges
 
 1. **Large Dataset Size:**
-   - **Challenge:** 2.2M+ properties require efficient processing
+   - **Challenge:** 1.5M+ properties across 1.4M+ unique streets require efficient processing
    - **Solution:** 
-     - Used MiniBatchKMeans instead of standard KMeans (100x faster)
-     - Implemented batch processing for predictions
-     - Memory-efficient feature engineering
-   - **Result:** Clustering completed in 0.30 seconds vs >1.5 hours
+     - Implemented DBSCAN street-level clustering (processes each street independently)
+     - Used efficient iteration with tqdm progress tracking
+     - Optimized coordinate calculations (EPS conversion from km to degrees)
+     - Memory-efficient processing (one street at a time)
+   - **Result:** Clustering completed in ~21 minutes (1,270 seconds) for 1.4M+ streets vs >1.5 hours for global clustering
 
 2. **Model Training Time:**
    - **Challenge:** Full dataset training with Optuna takes hours
@@ -1226,9 +1193,12 @@ This experiment aimed to identify spatial patterns and group properties into geo
 
 #### Unexpected Result 2: HDBSCAN Clustering Failure
 - **Issue:** HDBSCAN clustering took >1.5 hours and produced poor results
-- **Root Cause:** Algorithm complexity scales poorly with 2.2M points
-- **Solution:** Switched to MiniBatchKMeans
-- **Result:** 0.30 seconds training time, acceptable silhouette score (0.4768)
+- **Root Cause:** Algorithm complexity scales poorly with large datasets
+- **Solution:** Implemented DBSCAN street-level clustering strategy
+  - Clusters houses within each street separately (reduces computational complexity)
+  - Processes 1.4M+ streets efficiently (~1,170 streets/second)
+  - Assigns global cluster IDs across all streets
+- **Result:** ~21 minutes processing time, excellent silhouette score (0.751)
 
 #### Unexpected Result 3: XGBoost Early Stopping Error
 - **Issue:** `early_stopping_rounds` parameter not recognized in newer XGBoost version
@@ -1259,8 +1229,8 @@ This experiment aimed to identify spatial patterns and group properties into geo
 
 3. **Algorithm Selection Matters:**
    - XGBoost excels on tabular data with mixed feature types
-   - MiniBatchKMeans is essential for large-scale clustering
-   - Consider computational efficiency, not just accuracy
+   - DBSCAN street-level clustering provides excellent quality (0.751 silhouette) with efficient processing
+   - Consider computational efficiency and clustering strategy, not just algorithm choice
 
 4. **Hyperparameter Optimization:**
    - Optuna provides efficient search with minimal trials
@@ -1306,9 +1276,10 @@ This project successfully developed a comprehensive real estate price prediction
    - Flask-ready deployment architecture
 
 5. **Geographic Clustering:**
-   - Efficient clustering of 2.2M+ properties in 0.30 seconds
-   - Identified 30 spatial clusters for location-based analysis
-   - Enables neighborhood-level market insights
+   - Efficient DBSCAN street-level clustering of 1.5M+ properties across 1.4M+ streets
+   - Created 2,377 clusters with excellent quality (0.751 silhouette score)
+   - Identified 5,355 clustered properties (0.3%) representing dense street segments
+   - Enables street-level market insights and investment opportunity analysis
 
 ### 5.2 Key Takeaways
 
@@ -1323,7 +1294,8 @@ This project successfully developed a comprehensive real estate price prediction
    - Constraint validation prevents unrealistic predictions
 
 3. **Scalability Solutions:**
-   - MiniBatchKMeans enables efficient large-scale clustering
+   - DBSCAN street-level clustering enables efficient large-scale processing (1.4M+ streets in ~21 minutes)
+   - Street-by-street processing reduces computational complexity
    - Batch processing and memory optimization critical for production
    - Sampling strategies balance accuracy and computational cost
 
@@ -1442,7 +1414,7 @@ This project successfully developed a comprehensive real estate price prediction
 **Training Time:**
 - Hyperparameter optimization: ~30-60 minutes (30 trials)
 - Final model training: ~5-10 minutes
-- Clustering: 0.30 seconds
+- DBSCAN Street-Level Clustering: ~21 minutes (1,270 seconds) for 1,448,099 streets
 
 **Prediction Speed:**
 - Single property: <10ms
