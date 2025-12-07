@@ -1,0 +1,213 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  fullName      String
+  walletAddress String?  @unique
+  kycStatus     String   @default("PENDING") // PENDING, VERIFIED, REJECTED
+  role          String   @default("investor") // owner, investor, admin
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  properties      Property[]
+  holdings        UserHolding[]
+  kycData         KycData?
+  aiRecommendations AiRecommendation[]
+
+  @@index([email])
+  @@index([walletAddress])
+}
+
+model KycData {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  fullName        String
+  dateOfBirth     String
+  nationality     String
+  address         String
+  city            String
+  state           String
+  zipCode         String
+  idNumber        String
+  investorType    String   // RETAIL, ACCREDITED, INSTITUTIONAL, QUALIFIED_PURCHASER
+  taxId           String?
+  status          String   @default("PENDING") // PENDING, VERIFIED, REJECTED
+  rejectionReason String?
+  submittedAt     DateTime @default(now())
+  verifiedAt      DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([userId])
+}
+
+model Property {
+  id          String   @id @default(uuid())
+  name        String
+  address     String
+  city        String
+  state       String
+  zipCode     String
+  propertyType String
+  
+  // Prices
+  price       Decimal  @db.Decimal(12, 2)
+  valuation   Decimal  @db.Decimal(12, 2)
+  estimated_price Decimal? @db.Decimal(12, 2)  // AI estimation
+  
+  // Tokenization
+  totalTokens Int
+  tokensSold  Int      @default(0)
+  tokenPrice  Decimal  @db.Decimal(12, 2)
+  tokenAddress String  @default("")
+  
+  // Property details
+  bedrooms    Int?
+  bathrooms   Decimal? @db.Decimal(4, 1)
+  squareFeet  Int?
+  area        Int?
+  lotSize     Int?
+  yearBuilt   Int?
+  
+  status      String   @default("ACTIVE")
+  description String?  @db.Text
+  
+  // Metadata
+  extractionConfidence Decimal? @db.Decimal(5, 2)
+  lastExtractedAt      DateTime?
+  
+  // Owner
+  ownerId     String
+  owner       User     @relation(fields: [ownerId], references: [id])
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Reverse Relations (required by Prisma)
+  documents   PropertyDocument[]
+  holdings    UserHolding[]
+  transactions Transaction[]
+  
+  @@index([ownerId])
+  @@index([status])
+  @@index([tokenAddress])
+}
+
+
+model PropertyDocument {
+  id                        String   @id @default(uuid())
+  propertyId                String
+  documentType              String   // deed, appraisal, inspection, title
+  originalFilename          String
+  originalIpfsHash          String?
+  
+  // Extracted fields
+  extractedAddress          String?
+  extractedCity             String?
+  extractedState            String?
+  extractedZip              String?
+  extractedParcelNumber     String?
+  extractedValue            Decimal? @db.Decimal(15, 2)
+  extractedValueDate        DateTime?
+  extractedBedrooms         Int?
+  extractedBathrooms        Decimal? @db.Decimal(3, 1)
+  extractedSqft             Int?
+  extractedLotSize          Int?
+  extractedYearBuilt        Int?
+  extractedPropertyType     String?
+  extractedOwnerName        String?
+  extractedLegalDescription String?  @db.Text
+  extractedConditionRating  String?
+  extractedIssues           Json?
+  
+  // AI Processing metadata
+  extractionConfidence      Decimal? @db.Decimal(3, 2)
+  extractionModel           String?
+  extractedAt               DateTime?
+  rawExtractedJson          Json?
+  
+  // Status
+  processingStatus          String   @default("PENDING") // PENDING, PROCESSING, COMPLETED, FAILED
+  errorMessage              String?  @db.Text
+  
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  // Relations
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([propertyId])
+  @@index([documentType])
+  @@index([processingStatus])
+}
+
+model UserHolding {
+  id          String   @id @default(uuid())
+  userId      String
+  propertyId  String
+  tokensOwned Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, propertyId])
+  @@index([userId])
+  @@index([propertyId])
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  txHash      String   @unique
+  propertyId  String
+  fromAddress String
+  toAddress   String
+  amount      Int
+  price       Decimal  @db.Decimal(15, 2)
+  type        String   // BUY, SELL, TRANSFER, DIVIDEND
+  timestamp   DateTime @default(now())
+  blockNumber Int?
+
+  // Relations
+  property Property @relation(fields: [propertyId], references: [id])
+
+  @@index([txHash])
+  @@index([propertyId])
+  @@index([fromAddress])
+  @@index([toAddress])
+  @@index([timestamp])
+}
+
+model AiRecommendation {
+  id                 String   @id @default(uuid())
+  userId             String
+  recommendationType String   // PORTFOLIO_ANALYSIS, PROPERTY_SUGGESTION, RISK_ASSESSMENT
+  recommendation     Json
+  confidence         Decimal  @db.Decimal(3, 2)
+  createdAt          DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
