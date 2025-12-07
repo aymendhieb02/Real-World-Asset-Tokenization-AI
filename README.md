@@ -813,6 +813,27 @@ results = advisor.recommend_investments(
 - **Scalable:** Handles large datasets efficiently with sampling (up to 5,000 properties per query)
 - **Production-Ready:** Error handling, validation, and Flask-compatible JSON responses
 
+**Investment Agent Workflow:**
+1. **Initialization:** Loads trained XGBoost model and cleaned dataset
+2. **Pre-computation:** Builds location-based feature aggregations (city size, ZIP statistics)
+3. **Query Processing:** 
+   - Accepts user criteria (budget, location, property features)
+   - Filters dataset efficiently
+   - Samples if dataset too large (>5,000 properties)
+4. **Analysis Loop:** For each property:
+   - Forecasts prices at 1, 5, 10 years
+   - Calculates ROI for each horizon
+   - Assesses risk based on ZIP code volatility
+   - Computes risk-adjusted ROI
+5. **Ranking:** Sorts by 10-year ROI and returns top N recommendations
+6. **Response:** Returns structured JSON with all metrics and metadata
+
+**Error Handling:**
+- Validates input parameters
+- Handles missing data gracefully
+- Provides informative error messages
+- Returns success/failure status with messages
+
 ---
 
 ## 3. Experiments & Results
