@@ -20,16 +20,14 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Platform</h3>
             <ul className="space-y-2 text-sm text-foreground/60">
               <li><Link href="/properties" className="hover:text-neon-cyan transition-colors">Properties</Link></li>
-              <li><Link href="/marketplace" className="hover:text-neon-cyan transition-colors">Marketplace</Link></li>
               <li><Link href="/portfolio" className="hover:text-neon-cyan transition-colors">Portfolio</Link></li>
-              <li><Link href="/ai/insights" className="hover:text-neon-cyan transition-colors">AI Insights</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="font-semibold mb-4">Resources</h3>
             <ul className="space-y-2 text-sm text-foreground/60">
-              <li><Link href="/education" className="hover:text-neon-cyan transition-colors">Learn</Link></li>
+              <li><Link href="/learn" className="hover:text-neon-cyan transition-colors">Learn</Link></li>
               <li><Link href="/docs" className="hover:text-neon-cyan transition-colors">Documentation</Link></li>
               <li><Link href="/faq" className="hover:text-neon-cyan transition-colors">FAQ</Link></li>
               <li><Link href="/support" className="hover:text-neon-cyan transition-colors">Support</Link></li>

@@ -1,0 +1,32 @@
+import pandas as pd
+import numpy as np
+
+# Load ZIP coordinate lookup table
+zipdf = pd.read_csv("zip_latlng.csv")[["zip", "lat", "lng"]]
+
+# Convert ZIP lookup into dict for FAST access
+zip_lookup = zipdf.set_index("zip").to_dict("index")
+
+# ----------------------------------------------------
+# FUNCTION: Get jittered street coordinates by ZIP
+# ----------------------------------------------------
+def get_street_coordinates(zip_code):
+    """
+    Returns (lat_jitter, lng_jitter) based on ZIP code.
+    Adds small random jitter to avoid overlapping streets.
+    """
+
+    # ZIP not found
+    if zip_code not in zip_lookup:
+        return None, None
+
+    lat = zip_lookup[zip_code]["lat"]
+    lng = zip_lookup[zip_code]["lng"]
+
+    # Apply small geospatial jitter
+    lat_jitter = lat + np.random.normal(0, 0.002)
+    lng_jitter = lng + np.random.normal(0, 0.002)
+
+    return lat_jitter, lng_jitter
+
+

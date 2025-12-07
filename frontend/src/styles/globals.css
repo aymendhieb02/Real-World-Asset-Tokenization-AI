@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  /* Dark Theme (Default) */
   --color-background: hsl(222 47% 1%);
   --color-foreground: hsl(213 31% 91%);
   --color-card: hsl(222 47% 3%);
@@ -30,10 +31,45 @@
   --color-cyber-green: #22d3ee;
 }
 
+/* Light Theme */
+.light {
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(222 47% 11%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(222 47% 11%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(222 47% 11%);
+  --color-primary: hsl(217 91% 60%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  --color-secondary: hsl(210 40% 96%);
+  --color-secondary-foreground: hsl(222 47% 11%);
+  --color-muted: hsl(210 40% 96%);
+  --color-muted-foreground: hsl(215 16% 47%);
+  --color-accent: hsl(210 40% 96%);
+  --color-accent-foreground: hsl(222 47% 11%);
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+  --color-border: hsl(214 32% 91%);
+  --color-input: hsl(214 32% 91%);
+  --color-ring: hsl(217 91% 60%);
+  
+  --color-midnight-navy: #f8fafc;
+  --color-midnight-dark: #f1f5f9;
+  --color-neon-cyan: #0891b2;
+  --color-neon-purple: #7c3aed;
+  --color-electric-blue: #1d4ed8;
+  --color-cyber-green: #0e7490;
+}
+
 body {
-  background-color: #020617;
-  color: hsl(213 31% 91%);
+  background-color: var(--color-midnight-navy);
+  color: var(--color-foreground);
   font-feature-settings: "rlig" 1, "calt" 1;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.light body {
+  background-color: var(--color-midnight-navy);
 }
 
 @layer utilities {
@@ -66,8 +102,66 @@ body {
     content: "";
     position: absolute;
     inset: 2px;
-    background: #020617;
+    background: var(--color-midnight-navy);
     border-radius: inherit;
+  }
+  
+  /* Blockchain/Ethereum themed animations */
+  @keyframes electric-border {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 20px rgba(0, 246, 255, 0.5);
+    }
+    50% {
+      opacity: 0.8;
+      box-shadow: 0 0 40px rgba(0, 246, 255, 0.8);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+  
+  .blockchain-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  .float-animation {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 246, 255, 0.4),
+      transparent
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
   }
   
   .noise-texture {

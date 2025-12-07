@@ -5,18 +5,18 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { href: "/properties", label: "Properties" },
-    { href: "/properties/listings", label: "Listings" },
-    { href: "/properties/map", label: "Map" },
-    { href: "/marketplace", label: "Marketplace" },
+    { href: "/ai/price-prediction", label: "Price Prediction" },
+    { href: "/ai/cluster-map", label: "Cluster Map" },
+    { href: "/ai/advisor", label: "Advisor" },
+    { href: "/learn", label: "Learn" },
     { href: "/portfolio", label: "Portfolio" },
-    { href: "/ai/insights", label: "AI Insights" },
-    { href: "/education", label: "Learn" },
   ];
 
   return (
@@ -43,8 +43,9 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Wallet Connect */}
-          <div className="hidden md:block">
+          {/* Theme Toggle & Wallet Connect */}
+          <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
             <ConnectButton />
           </div>
 
@@ -72,7 +73,8 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4">
+            <div className="pt-4 space-y-4">
+              <ThemeToggle />
               <ConnectButton />
             </div>
           </div>

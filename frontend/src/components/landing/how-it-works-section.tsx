@@ -13,20 +13,20 @@ const steps = [
   {
     number: "02",
     icon: Brain,
-    title: "AI Analysis",
-    description: "Get instant AI-powered valuation, risk assessment, and future trend predictions for any property.",
+    title: "Property Analysis",
+    description: "View detailed property information, tokenomics, and investment details for any property.",
   },
   {
     number: "03",
     icon: Coins,
     title: "Purchase Tokens",
-    description: "Buy property tokens directly or place limit orders on our marketplace. Fractional ownership starts at $10.",
+    description: "Buy property tokens directly. Fractional ownership starts at $10.",
   },
   {
     number: "04",
     icon: TrendingUp,
     title: "Earn & Trade",
-    description: "Receive dividends from rental income and property appreciation. Trade tokens 24/7 on our marketplace.",
+    description: "Receive dividends from rental income and property appreciation.",
   },
 ];
 

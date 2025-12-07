@@ -33,6 +33,12 @@ export interface AIValuation {
   factors: string[];
   predictedValue6Months?: number;
   predictedValue12Months?: number;
+  valueDrivers?: Array<{
+    driver: string;
+    impact: string;
+    reason: string;
+    confidence: number;
+  }>;
 }
 
 // AI Portfolio Recommendation

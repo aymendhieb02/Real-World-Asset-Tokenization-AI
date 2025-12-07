@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { getPropertyById } from "@/lib/api/mock-properties";
-import { getAIValuation } from "@/lib/api/mock-ai";
 import { PropertyDetailsTabs } from "@/components/property/property-details-tabs";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -18,13 +17,18 @@ export default function PropertyDetailsPage() {
     queryFn: () => getPropertyById(propertyId),
   });
 
-  const { data: valuation, isLoading: valuationLoading } = useQuery({
-    queryKey: ["valuation", propertyId],
-    queryFn: () => getAIValuation(propertyId),
-    enabled: !!propertyId,
-  });
+  // Simple mock valuation
+  const valuation = property ? {
+    value: property.pricePerToken ? property.pricePerToken * (property.totalTokens || 1) : 500000,
+    confidence: 85,
+    riskScore: 35,
+    marketTrend: "up" as const,
+    factors: ["Prime location", "Strong rental demand", "Growing neighborhood"],
+    predictedValue6Months: property.pricePerToken ? property.pricePerToken * (property.totalTokens || 1) * 1.05 : 525000,
+    predictedValue12Months: property.pricePerToken ? property.pricePerToken * (property.totalTokens || 1) * 1.1 : 550000,
+  } : null;
 
-  if (propertyLoading || valuationLoading) {
+  if (propertyLoading) {
     return (
       <MainLayout>
         <div className="container mx-auto px-4 py-8">

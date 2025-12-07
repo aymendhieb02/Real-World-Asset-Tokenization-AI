@@ -1,26 +1,16 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getAIPortfolioRecommendation } from "@/lib/api/mock-ai";
 import { getProperties } from "@/lib/api/mock-properties";
 import { MainLayout } from "@/components/layout/main-layout";
-import { AIPortfolioRecommendationWidget } from "@/components/ai/ai-portfolio-recommendation-widget";
 import { PropertyCard } from "@/components/property/property-card";
 import { TokenBalance } from "@/components/web3/token-balance";
 import { PerformanceLineChart } from "@/components/charts/performance-line-chart";
 import { formatCurrency, formatPercentage } from "@/lib/utils";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { TrendingUp, TrendingDown, Wallet } from "lucide-react";
-import { useAccount } from "wagmi";
 
 export default function InvestorDashboard() {
-  const { address } = useAccount();
-  const { data: recommendation } = useQuery({
-    queryKey: ["portfolio-recommendation", address],
-    queryFn: () => getAIPortfolioRecommendation(address || "default"),
-    enabled: !!address,
-  });
-
   const { data: properties } = useQuery({
     queryKey: ["properties"],
     queryFn: getProperties,
@@ -105,13 +95,6 @@ export default function InvestorDashboard() {
             </div>
           </CardContent>
         </Card>
-
-        {/* AI Recommendations */}
-        {recommendation && (
-          <div className="mb-8">
-            <AIPortfolioRecommendationWidget recommendation={recommendation} />
-          </div>
-        )}
 
         {/* Recommended Properties */}
         <div>

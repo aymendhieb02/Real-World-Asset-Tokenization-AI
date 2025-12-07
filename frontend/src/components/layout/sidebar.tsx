@@ -6,16 +6,16 @@ import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   Home,
-  ShoppingCart,
   Wallet,
   TrendingUp,
-  Brain,
   GraduationCap,
   Settings,
   FileCheck,
   Building2,
   Users,
   BarChart3,
+  Brain,
+  MapPin,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -26,9 +26,10 @@ const investorLinks = [
   { href: "/dashboard/investor", label: "Dashboard", icon: LayoutDashboard },
   { href: "/portfolio", label: "Portfolio", icon: Wallet },
   { href: "/properties", label: "Properties", icon: Home },
-  { href: "/marketplace", label: "Marketplace", icon: ShoppingCart },
+  { href: "/ai/price-prediction", label: "Price Prediction", icon: TrendingUp },
+  { href: "/ai/cluster-map", label: "Cluster Map", icon: MapPin },
+  { href: "/ai/advisor", label: "Investment Advisor", icon: Brain },
   { href: "/dividends", label: "Dividends", icon: TrendingUp },
-  { href: "/ai/advisor", label: "AI Advisor", icon: Brain },
   { href: "/education", label: "Learn", icon: GraduationCap },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
@@ -36,9 +37,7 @@ const investorLinks = [
 const ownerLinks = [
   { href: "/dashboard/owner", label: "Dashboard", icon: LayoutDashboard },
   { href: "/properties", label: "My Properties", icon: Building2 },
-  { href: "/marketplace", label: "Marketplace", icon: ShoppingCart },
   { href: "/dividends", label: "Revenue", icon: TrendingUp },
-  { href: "/ai/insights", label: "AI Insights", icon: Brain },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 
@@ -46,7 +45,6 @@ const adminLinks = [
   { href: "/dashboard/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/kyc", label: "KYC Management", icon: FileCheck },
   { href: "/properties", label: "Properties", icon: Building2 },
-  { href: "/marketplace", label: "Marketplace", icon: ShoppingCart },
   { href: "/dashboard/admin/users", label: "Users", icon: Users },
   { href: "/dashboard/admin/metrics", label: "Metrics", icon: BarChart3 },
   { href: "/settings", label: "Settings", icon: Settings },

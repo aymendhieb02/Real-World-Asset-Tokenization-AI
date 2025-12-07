@@ -34,12 +34,6 @@ export default function PropertiesPage() {
               onChange={(e) => setSearch(e.target.value)}
               className="max-w-md"
             />
-            <Link href="/properties/listings">
-              <Button variant="outline">View MLS Listings</Button>
-            </Link>
-            <Link href="/properties/map">
-              <Button variant="outline">View on Map</Button>
-            </Link>
           </div>
         </div>
 

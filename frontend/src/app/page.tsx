@@ -6,7 +6,6 @@ import { HowItWorksSection } from "@/components/landing/how-it-works-section";
 import { CTASection } from "@/components/landing/cta-section";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { AIChatAssistantDrawer } from "@/components/ai/ai-chat-assistant-drawer";
 
 export default function Home() {
   return (
@@ -19,7 +18,6 @@ export default function Home() {
         <CTASection />
       </main>
       <Footer />
-      <AIChatAssistantDrawer />
     </div>
   );
 }

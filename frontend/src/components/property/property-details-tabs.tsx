@@ -2,9 +2,6 @@
 
 import { Property, AIValuation } from "@/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AIValuationCard } from "@/components/ai/ai-valuation-card";
-import { AIRiskScoreGauge } from "@/components/ai/ai-risk-score-gauge";
-import { AITrendPredictionChart } from "@/components/ai/ai-trend-prediction-chart";
 import { BuyTokenForm } from "./buy-token-form";
 import { APYCalculator } from "./apy-calculator";
 import { InvestmentSimulation } from "./investment-simulation";
@@ -20,9 +17,8 @@ interface PropertyDetailsTabsProps {
 export function PropertyDetailsTabs({ property, valuation }: PropertyDetailsTabsProps) {
   return (
     <Tabs defaultValue="overview" className="w-full">
-      <TabsList className="grid w-full grid-cols-4">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="overview">Overview</TabsTrigger>
-        <TabsTrigger value="ai-analysis">AI Analysis</TabsTrigger>
         <TabsTrigger value="tokenomics">Tokenomics</TabsTrigger>
         <TabsTrigger value="invest">Invest</TabsTrigger>
       </TabsList>
@@ -74,14 +70,6 @@ export function PropertyDetailsTabs({ property, valuation }: PropertyDetailsTabs
             </div>
           </CardContent>
         </Card>
-      </TabsContent>
-
-      <TabsContent value="ai-analysis" className="space-y-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <AIValuationCard valuation={valuation} propertyName={property.name} />
-          <AIRiskScoreGauge riskScore={valuation.riskScore} />
-        </div>
-        <AITrendPredictionChart valuation={valuation} />
       </TabsContent>
 
       <TabsContent value="tokenomics" className="space-y-4">

@@ -64,3 +64,10 @@ next-env.d.ts
 Thumbs.db
 .DS_Store
 
+# Large model files (too large for GitHub)
+models/*.pkl
+models/*.csv
+!models/street_clustering_stats.csv
+!models/street_cluster_centroids.csv
+!models/clustered_by_street.csv
+

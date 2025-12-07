@@ -7,8 +7,8 @@ import { Brain, Shield, Zap, TrendingUp, Globe, Lock } from "lucide-react";
 const features = [
   {
     icon: Brain,
-    title: "AI-Powered Valuation",
-    description: "Instant property valuation using advanced AI models with 92% accuracy. Get real-time market insights and future trend predictions.",
+    title: "Property Valuation",
+    description: "View property valuations and investment details. Get insights into property performance and potential returns.",
   },
   {
     icon: Shield,
@@ -22,13 +22,13 @@ const features = [
   },
   {
     icon: TrendingUp,
-    title: "Risk Intelligence",
-    description: "AI-driven risk assessment for every property. Understand market volatility, location factors, and investment suitability.",
+    title: "Portfolio Tracking",
+    description: "Track your property investments and portfolio performance. Monitor returns and manage your holdings.",
   },
   {
     icon: Globe,
     title: "Global Access",
-    description: "Invest in real estate anywhere in the world. 24/7 marketplace with borderless transactions.",
+    description: "Invest in real estate anywhere in the world with borderless transactions.",
   },
   {
     icon: Lock,

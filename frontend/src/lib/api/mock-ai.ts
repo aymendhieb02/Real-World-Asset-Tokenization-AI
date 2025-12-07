@@ -1,10 +1,11 @@
+// Simple mock data for property valuations
 import { AIValuation, AIPortfolioRecommendation } from "@/types";
 
 export async function getAIValuation(propertyId: string): Promise<AIValuation> {
-  await new Promise((resolve) => setTimeout(resolve, 800));
-  
-  // Mock AI valuation data
-  const valuations: Record<string, AIValuation> = {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // Mock AI valuation data
+      const valuations: Record<string, AIValuation> = {
     "1": {
       value: 550000,
       confidence: 87,
@@ -82,21 +83,23 @@ export async function getAIValuation(propertyId: string): Promise<AIValuation> {
     },
   };
 
-  return valuations[propertyId] || {
-    value: 500000,
-    confidence: 75,
-    riskScore: 50,
-    marketTrend: "neutral",
-    factors: ["Standard market valuation"],
-  };
+      resolve(valuations[propertyId] || {
+        value: 500000,
+        confidence: 75,
+        riskScore: 50,
+        marketTrend: "neutral",
+        factors: ["Standard market valuation"],
+      });
+    }, 800);
+  });
 }
 
 export async function getAIPortfolioRecommendation(
   userId: string
 ): Promise<AIPortfolioRecommendation> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  return {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
     recommendedAssets: [
       {
         propertyId: "1",
@@ -126,8 +129,10 @@ export async function getAIPortfolioRecommendation(
       "Mix of high-growth and stable income properties",
       "Recommended allocation balances risk and return",
     ],
-    expectedReturn: 10.5,
-    riskLevel: "medium",
-  };
+        expectedReturn: 10.5,
+        riskLevel: "medium",
+      });
+    }, 1000);
+  });
 }
 
